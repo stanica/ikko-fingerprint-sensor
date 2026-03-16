@@ -57,6 +57,9 @@ logcat -b events -s screen_toggled -v raw -T 1 2>/dev/null | while IFS= read -r 
     # Raw format outputs just "0" or "1"
     case "$line" in
         0)
+            # Skip if disabled via toggle
+            [ -f "/data/local/tmp/fp_sleep_disabled" ] && continue
+
             # Verify HAL is still alive
             if ! kill -0 "$HAL_PID" 2>/dev/null; then
                 HAL_PID=$(find_hal_pid)

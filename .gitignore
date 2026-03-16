@@ -1,1 +1,11 @@
 *.zip
+*.apk
+*.idsig
+toggle-app/base.apk
+toggle-app/classes/
+toggle-app/compiled_res.zip
+toggle-app/debug.keystore
+toggle-app/dex_out/
+toggle-app/fp_sleep_toggle.apk
+toggle-app/fp_sleep_toggle_aligned.apk
+toggle-app/gen/
