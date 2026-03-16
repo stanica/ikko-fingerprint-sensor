@@ -20,17 +20,22 @@ while [ "$(getprop sys.boot_completed)" != "1" ]; do
     sleep 1
 done
 
-log "Boot completed, waiting for HAL to settle..."
-sleep 5
+log "Boot completed, waiting for HAL..."
 
 # Find the fingerprint HAL PID
 find_hal_pid() {
     ps -A -o PID,ARGS 2>/dev/null | grep 'fingerprint@2.1' | grep -v grep | awk '{print $1}' | head -1
 }
 
-HAL_PID=$(find_hal_pid)
+# Retry until HAL is up (may take a while after boot)
+HAL_PID=""
+for i in $(seq 1 30); do
+    HAL_PID=$(find_hal_pid)
+    [ -n "$HAL_PID" ] && break
+    sleep 2
+done
 if [ -z "$HAL_PID" ]; then
-    log "ERROR: Cannot find fingerprint HAL process"
+    log "ERROR: Cannot find fingerprint HAL process after 60s"
     exit 1
 fi
 log "Fingerprint HAL PID: $HAL_PID"
