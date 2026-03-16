@@ -1,0 +1,6 @@
+id=fp_sleep
+name=Fingerprint Sleep on Screen Off
+version=v1.0
+versionCode=1
+author=orville
+description=Freezes fingerprint HAL when screen is off to eliminate IRQ storm and save battery
