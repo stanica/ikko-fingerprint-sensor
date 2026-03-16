@@ -24,7 +24,7 @@ log "Boot completed, waiting for HAL..."
 
 # Find the fingerprint HAL PID
 find_hal_pid() {
-    ps -A -o PID,ARGS 2>/dev/null | grep 'fingerprint@2.1' | grep -v grep | awk '{print $1}' | head -1
+    /system/bin/ps -A -o PID,ARGS 2>/dev/null | grep 'fingerprint@2.1' | grep -v grep | awk '{print $1}' | head -1
 }
 
 # Retry until HAL is up (may take a while after boot)
