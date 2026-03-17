@@ -20,7 +20,16 @@ while [ "$(getprop sys.boot_completed)" != "1" ]; do
     sleep 1
 done
 
-log "Boot completed, waiting for HAL..."
+log "Boot completed"
+
+# Re-register QS tile if toggle app is installed (fixes stale tile after reboot)
+if pm list packages 2>/dev/null | grep -q com.ikko.fpsleep; then
+    cmd statusbar remove-tile 'custom(com.ikko.fpsleep/.FpSleepTile)' 2>/dev/null
+    cmd statusbar add-tile 'custom(com.ikko.fpsleep/.FpSleepTile)' 2>/dev/null
+    log "QS tile re-registered"
+fi
+
+log "Waiting for HAL..."
 
 # Find the fingerprint HAL PID
 find_hal_pid() {
